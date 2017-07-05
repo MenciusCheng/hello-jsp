@@ -1,0 +1,42 @@
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hello-jsp</title>
+</head>
+<body>
+<h1>Hello JSP</h1>
+<p>现在的时间是：<%= new java.util.Date() %>
+</p>
+<%
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection conn = DriverManager.getConnection(
+            "jdbc:mysql://192.168.3.116:3306/weiweicat", "root", "root"
+    );
+    Statement stmt = conn.createStatement();
+    ResultSet rs = stmt.executeQuery("select * from websites");
+%>
+<table>
+    <%
+        while (rs.next()) {
+    %>
+    <tr>
+        <td><%=rs.getString(1)%>
+        </td>
+        <td><%=rs.getString(2)%>
+        </td>
+    </tr>
+    <%
+        }
+    %>
+</table>
+</body>
+</html>
