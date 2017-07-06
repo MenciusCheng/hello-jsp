@@ -16,27 +16,21 @@
 <h1>Hello JSP</h1>
 <p>现在的时间是：<%= new java.util.Date() %>
 </p>
-<%
-    Class.forName("com.mysql.jdbc.Driver");
-    Connection conn = DriverManager.getConnection(
-            "jdbc:mysql://192.168.3.116:3306/weiweicat", "root", "root"
-    );
-    Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery("select * from websites");
+<%!
+    Integer applicationCounter = 0;
+    Integer sessionCounter = 0;
+    Integer requestCounter = 0;
+    Integer pageCounter = 0;
 %>
-<table>
-    <%
-        while (rs.next()) {
-    %>
-    <tr>
-        <td><%=rs.getString(1)%>
-        </td>
-        <td><%=rs.getString(2)%>
-        </td>
-    </tr>
-    <%
-        }
-    %>
-</table>
+<%
+    application.setAttribute("applicationCounter", ++applicationCounter);
+    session.setAttribute("sessionCounter", ++sessionCounter);
+    request.setAttribute("requestCounter", ++requestCounter);
+    pageContext.setAttribute("pageCounter", ++pageCounter);
+%>
+<p>applicationCounter=<%=application.getAttribute("applicationCounter")%></p>
+<p>sessionCounter=<%=session.getAttribute("sessionCounter")%></p>
+<p>requestCounter=<%=request.getAttribute("requestCounter")%></p>
+<p>pageCounter=<%=pageContext.getAttribute("pageCounter")%></p>
 </body>
 </html>
